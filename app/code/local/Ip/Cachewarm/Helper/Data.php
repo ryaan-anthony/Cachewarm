@@ -9,7 +9,7 @@ class Ip_Cachewarm_Helper_Data extends Mage_Core_Helper_Abstract
         $read = Mage::getSingleton('core/resource')->getConnection('core_read');
         $result = $read->query("select value from core_config_data where path = '{$this->config_path}'");
         if($row = $result->fetch(PDO::FETCH_ASSOC)){
-            return $row['value'];
+            return json_decode($row['value']);
         }
         return false;
     }
