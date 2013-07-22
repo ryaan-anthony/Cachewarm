@@ -6,17 +6,27 @@ class Ip_Cachewarm_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getMaps()
     {
-        return json_decode(Mage::getStoreConfig($this->config_path));
+        $read = Mage::getSingleton('core/resource')->getConnection('core_read');
+        $result = $read->query("select value from core_config_data where path = '{$this->config_path}'");
+        if($row = $result->fetch(PDO::FETCH_ASSOC)){
+            return $row['value'];
+        }
+        return false;
     }
 
     public function setMaps($data)
     {
-        Mage::getModel('core/config')->saveConfig($this->config_path, json_encode($data));
+        $write = Mage::getSingleton('core/resource')->getConnection('core_write');
+        $write->query(
+            "insert into core_config_data (path, value) values (?, ?)",
+            array($this->config_path, json_encode($data))
+        );
     }
 
     public function unsMaps()
     {
-        Mage::getModel('core/config')->deleteConfig($this->config_path);
+        $write = Mage::getSingleton('core/resource')->getConnection('core_write');
+        $write->query("delete from core_config_data where path = '{$this->config_path}'");
     }
 
 
