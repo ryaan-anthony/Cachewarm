@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<config>
+
+    <modules>
+        <Ip_Cachewarm>
+            <version>1.0.0</version>
+        </Ip_Cachewarm>
+    </modules>
+
+    <global>
+
+        <helpers>
+            <cachewarm>
+                <class>Ip_Cachewarm_Helper</class>
+            </cachewarm>
+        </helpers>
+
+        <models>
+            <cachewarm>
+                <class>Ip_Cachewarm_Model</class>
+            </cachewarm>
+        </models>
+
+        <blocks>
+            <cachewarm>
+                <class>Ip_Cachewarm_Block</class>
+            </cachewarm>
+            <adminhtml>
+                <rewrite>
+                    <cache>Ip_Cachewarm_Block_Cache</cache>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+
+    </global>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Ip_Cachewarm_Admin before="Mage_Adminhtml">Ip_Cachewarm_Admin</Ip_Cachewarm_Admin>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <crontab>
+        <jobs>
+            <ip_cachewarm>
+                <schedule>
+                    <cron_expr>*/5 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>cachewarm/crawler::cron</model>
+                </run>
+            </ip_cachewarm>
+        </jobs>
+    </crontab>
+
+</config>

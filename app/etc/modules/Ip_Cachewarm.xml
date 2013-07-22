@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ip_Cachewarm>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Ip_Cachewarm>
+    </modules>
+</config>
