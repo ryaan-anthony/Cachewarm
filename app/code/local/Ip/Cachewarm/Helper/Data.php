@@ -22,6 +22,8 @@ class Ip_Cachewarm_Helper_Data extends Mage_Core_Helper_Abstract
     public function unsMaps()
     {
         Mage::getConfig()->deleteConfig($this->config_path);
+        Mage::getConfig()->reinit();
+        Mage::app()->reinitStores();
     }
 
 }
